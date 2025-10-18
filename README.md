@@ -1,1 +1,1 @@
-# MediTrack-Medical_Store_Inventory_Management_And_POS_System
+# MediTrack-Medical Store Inventory Management And POS System

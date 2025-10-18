@@ -31,7 +31,7 @@ const HomePage: React.FC = () => {
             initial={{ opacity: 0, x: 20 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.6, delay: 0.2 }}
-            href="https://github.com"
+            href="https://github.com/skyxwalker/MediTrack-Medical_Store_Inventory_Management_And_POS_System.git"
             target="_blank"
             rel="noopener noreferrer"
             className="flex items-center space-x-2 bg-white/10 backdrop-blur-md border border-white/20 rounded-full px-6 py-3 hover:bg-white/20 transition-all duration-300 group"

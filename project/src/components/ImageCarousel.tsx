@@ -2,6 +2,20 @@ import React, { useState } from 'react';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 
+// Import images from Assets folder
+import adminDashboard from '../Assets/admin dashboard.png';
+import customerProfile from '../Assets/customer profile.png';
+import inventoryManagement from '../Assets/inventory management.png';
+import loginPortals from '../Assets/login portals.png';
+import medicineCatalogue from '../Assets/medicine catalouge.png';
+import posSystem from '../Assets/pos System.png';
+import purchaseReturns from '../Assets/purchase returns.png';
+import salesReport from '../Assets/sales report.png';
+import staffDashboard from '../Assets/staff dashboard.png';
+import staffManagement from '../Assets/staff management.png';
+import stockLimitAlerts from '../Assets/stock limit alerts.png';
+import vendorManagement from '../Assets/vendor management.png';
+
 const ImageCarousel: React.FC = () => {
   const [currentIndex, setCurrentIndex] = useState(0);
 
@@ -9,74 +23,74 @@ const ImageCarousel: React.FC = () => {
   const screenshots = [
     {
       id: 1,
-      url: 'https://images.pexels.com/photos/3992949/pexels-photo-3992949.jpeg?auto=compress&cs=tinysrgb&w=1600',
+      url: adminDashboard,
       title: 'Admin Dashboard',
       description: 'Comprehensive analytics and system overview'
     },
     {
       id: 2,
-      url: 'https://images.pexels.com/photos/4386466/pexels-photo-4386466.jpeg?auto=compress&cs=tinysrgb&w=1600',
+      url: inventoryManagement,
       title: 'Inventory Management',
       description: 'Real-time stock tracking and management'
     },
     {
       id: 3,
-      url: 'https://images.pexels.com/photos/4021775/pexels-photo-4021775.jpeg?auto=compress&cs=tinysrgb&w=1600',
+      url: posSystem,
       title: 'POS System',
       description: 'Streamlined point-of-sale interface'
     },
     {
       id: 4,
-      url: 'https://images.pexels.com/photos/5327585/pexels-photo-5327585.jpeg?auto=compress&cs=tinysrgb&w=1600',
+      url: staffManagement,
       title: 'Staff Management',
       description: 'Role-based access and staff monitoring'
     },
     {
       id: 5,
-      url: 'https://images.pexels.com/photos/4386398/pexels-photo-4386398.jpeg?auto=compress&cs=tinysrgb&w=1600',
+      url: vendorManagement,
       title: 'Vendor Management',
       description: 'Comprehensive vendor relationship management'
     },
     {
       id: 6,
-      url: 'https://images.pexels.com/photos/3683074/pexels-photo-3683074.jpeg?auto=compress&cs=tinysrgb&w=1600',
+      url: customerProfile,
       title: 'Customer Profiles',
       description: 'Customer management and purchase history'
     },
     {
       id: 7,
-      url: 'https://images.pexels.com/photos/4386431/pexels-photo-4386431.jpeg?auto=compress&cs=tinysrgb&w=1600',
+      url: salesReport,
       title: 'Sales Reports',
       description: 'Detailed sales analytics and reporting'
     },
     {
       id: 8,
-      url: 'https://images.pexels.com/photos/4021773/pexels-photo-4021773.jpeg?auto=compress&cs=tinysrgb&w=1600',
+      url: medicineCatalogue,
       title: 'Medicine Catalog',
       description: 'Complete medicine database with details'
     },
     {
       id: 9,
-      url: 'https://images.pexels.com/photos/3683056/pexels-photo-3683056.jpeg?auto=compress&cs=tinysrgb&w=1600',
-      title: 'Order Processing',
+      url: loginPortals,
+      title: 'Seperate Login Portals',
       description: 'Streamlined order management system'
     },
     {
       id: 10,
-      url: 'https://images.pexels.com/photos/4386370/pexels-photo-4386370.jpeg?auto=compress&cs=tinysrgb&w=1600',
+      url: stockLimitAlerts,
       title: 'Stock Alerts',
       description: 'Low stock notifications and reorder alerts'
     },
     {
       id: 11,
-      url: 'https://images.pexels.com/photos/4021777/pexels-photo-4021777.jpeg?auto=compress&cs=tinysrgb&w=1600',
-      title: 'Prescription Management',
+      url: staffDashboard,
+      title: 'Staff Dashboard',
       description: 'Digital prescription handling and storage'
     },
     {
       id: 12,
-      url: 'https://images.pexels.com/photos/3683081/pexels-photo-3683081.jpeg?auto=compress&cs=tinysrgb&w=1600',
-      title: 'Financial Overview',
+      url: purchaseReturns,
+      title: 'Purchase Returns',
       description: 'Revenue tracking and financial insights'
     }
   ];

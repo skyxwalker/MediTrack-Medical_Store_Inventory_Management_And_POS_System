@@ -6,6 +6,8 @@ const ThreeBackground: React.FC = () => {
   const sceneRef = useRef<THREE.Scene>();
   const rendererRef = useRef<THREE.WebGLRenderer>();
   const animationRef = useRef<number>();
+  const mouseRef = useRef({ x: 0, y: 0 });
+  const cameraRef = useRef<THREE.PerspectiveCamera>();
 
   useEffect(() => {
     if (!mountRef.current) return;
@@ -20,6 +22,7 @@ const ThreeBackground: React.FC = () => {
       0.1,
       1000
     );
+    cameraRef.current = camera;
 
     const renderer = new THREE.WebGLRenderer({ alpha: true, antialias: true });
     rendererRef.current = renderer;
@@ -126,29 +129,71 @@ const ThreeBackground: React.FC = () => {
 
     camera.position.z = 20;
 
+    // Mouse movement handler
+    const handleMouseMove = (event: MouseEvent) => {
+      mouseRef.current.x = (event.clientX / window.innerWidth) * 2 - 1;
+      mouseRef.current.y = -(event.clientY / window.innerHeight) * 2 + 1;
+    };
+
+    window.addEventListener('mousemove', handleMouseMove);
+
     // Animation loop
     const animate = () => {
       animationRef.current = requestAnimationFrame(animate);
 
+      // Camera follows mouse with smooth interpolation
+      if (cameraRef.current) {
+        const targetX = mouseRef.current.x * 2;
+        const targetY = mouseRef.current.y * 2;
+        
+        cameraRef.current.position.x += (targetX - cameraRef.current.position.x) * 0.02;
+        cameraRef.current.position.y += (targetY - cameraRef.current.position.y) * 0.02;
+        
+        // Look at center with slight offset based on mouse
+        cameraRef.current.lookAt(
+          mouseRef.current.x * 0.5,
+          mouseRef.current.y * 0.5,
+          0
+        );
+      }
+
       objects.forEach((obj, index) => {
         // Rotation
-        obj.rotation.x += 0.002 + index * 0.0001;
-        obj.rotation.y += 0.003 + index * 0.0001;
-        obj.rotation.z += 0.001 + index * 0.0001;
+        const mouseInfluence = (mouseRef.current.x + mouseRef.current.y) * 0.001;
+        obj.rotation.x += 0.002 + index * 0.0001 + mouseInfluence;
+        obj.rotation.y += 0.003 + index * 0.0001 + mouseInfluence * 0.5;
+        obj.rotation.z += 0.001 + index * 0.0001 + mouseInfluence * 0.3;
         
         // Floating motion
-        obj.position.y += Math.sin(Date.now() * 0.001 + index) * 0.002;
-        obj.position.x += Math.cos(Date.now() * 0.0008 + index) * 0.001;
+        const time = Date.now() * 0.001;
+        obj.position.y += Math.sin(time + index) * 0.002;
+        obj.position.x += Math.cos(time * 0.8 + index) * 0.001;
+        
+        // Mouse influence on position
+        const distance = Math.sqrt(
+          Math.pow(obj.position.x - mouseRef.current.x * 5, 2) +
+          Math.pow(obj.position.y - mouseRef.current.y * 5, 2)
+        );
+        
+        if (distance < 8) {
+          const force = (8 - distance) * 0.01;
+          const angle = Math.atan2(
+            obj.position.y - mouseRef.current.y * 5,
+            obj.position.x - mouseRef.current.x * 5
+          );
+          obj.position.x += Math.cos(angle) * force;
+          obj.position.y += Math.sin(angle) * force;
+        }
         
         // Subtle scale pulsing for some objects
         if (index % 3 === 0) {
-          const scale = 1 + Math.sin(Date.now() * 0.002 + index) * 0.1;
+          const scale = 1 + Math.sin(time * 2 + index) * 0.1;
           obj.scale.setScalar(scale);
         }
       });
 
       // Slowly rotate the entire scene
-      scene.rotation.y += 0.0005;
+      scene.rotation.y += 0.0005 + mouseRef.current.x * 0.0001;
 
       renderer.render(scene, camera);
     };
@@ -169,6 +214,7 @@ const ThreeBackground: React.FC = () => {
         cancelAnimationFrame(animationRef.current);
       }
       window.removeEventListener('resize', handleResize);
+      window.removeEventListener('mousemove', handleMouseMove);
       if (mountRef.current && renderer.domElement) {
         mountRef.current.removeChild(renderer.domElement);
       }
